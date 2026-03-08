@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Copy, Check, AlertCircle } from "lucide-react";
+import { Copy, Check, AlertCircle, Link as LinkIcon } from "lucide-react";
 
 const CONTRIBUTOR_ID = "298069";
 
@@ -121,72 +121,71 @@ export default function LinkProcessor() {
   };
 
   return (
-    <Card className="p-6 md:p-8 bg-card border-border shadow-lg">
-      <form onSubmit={processUrl} className="space-y-6">
-        <div>
-          <label className="block text-sm font-medium text-foreground mb-2">
-            Name
+    <Card className="w-full">
+      <div className="flex items-center justify-center w-16 h-16 rounded-full neo-inset mx-auto mb-6">
+        <LinkIcon className="text-primary size-8" />
+      </div>
+      <form onSubmit={processUrl} className="space-y-8">
+        <div className="space-y-3">
+          <label className="block text-sm font-semibold text-foreground px-1">
+            Your Name
           </label>
           <Input
             type="text"
             placeholder="Enter your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full"
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-foreground mb-2">
+        <div className="space-y-3">
+          <label className="block text-sm font-semibold text-foreground px-1">
             Microsoft URL
           </label>
           <Input
             type="url"
-            placeholder="https://learn.microsoft.com/en-us/..."
+            placeholder="https://learn.microsoft.com/..."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="w-full"
           />
         </div>
 
-        <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-md border border-border">
+        <div className="flex items-center gap-4 p-5 neo-inset rounded-[1.25rem]">
           <input
             type="checkbox"
             id="customIdToggle"
             checked={useCustomId}
             onChange={(e) => setUseCustomId(e.target.checked)}
-            className="w-4 h-4 rounded border-border text-primary focus:ring-primary cursor-pointer"
+            className="w-5 h-5 rounded shadow-inner text-primary focus:ring-primary cursor-pointer accent-primary"
           />
           <label
             htmlFor="customIdToggle"
-            className="text-sm font-medium text-foreground cursor-pointer"
+            className="text-sm font-bold text-foreground cursor-pointer select-none"
           >
             Not a member of MSC-ECU
           </label>
         </div>
 
         {useCustomId && (
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+          <div className="space-y-3 animate-in slide-in-from-top-2 fade-in duration-300">
+            <label className="block text-sm font-semibold text-foreground px-1">
               Custom Sharing ID
             </label>
             <Input
               type="text"
-              placeholder="e.g., ?wt.mc_id=studentamb_123456"
+              placeholder="e.g., studentamb_123456"
               value={customId}
               onChange={(e) => setCustomId(e.target.value)}
-              className="w-full"
             />
-            <p className="text-xs text-muted-foreground mt-1">
-              Enter your full sharing parameter (e.g.,
-              ?wt.mc_id=studentamb_123456)
+            <p className="text-xs text-muted-foreground font-medium px-2">
+              Enter your full sharing parameter
             </p>
           </div>
         )}
 
         {error && (
-          <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/30 rounded-md text-destructive">
-            <AlertCircle size={18} />
+          <div className="flex items-center gap-3 p-4 neo-inset rounded-xl text-destructive font-semibold">
+            <AlertCircle size={20} className="shrink-0" />
             <span className="text-sm">{error}</span>
           </div>
         )}
@@ -194,46 +193,45 @@ export default function LinkProcessor() {
         <Button
           type="submit"
           disabled={loading}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2 rounded-md transition-colors"
+          className="w-full mt-4"
         >
-          {loading ? "Processing..." : "Generate Link"}
+          {loading ? "Processing..." : "Generate Magic Link"}
         </Button>
       </form>
 
       {processedUrl && (
-        <div className="mt-8 pt-8 border-t border-border">
-          <div className="space-y-4">
+        <div className="mt-10 animate-in fade-in zoom-in-95 duration-500">
+          <div className="space-y-6">
             <div>
-              <p className="text-sm font-medium text-muted-foreground mb-2">
+              <p className="text-sm font-bold text-muted-foreground mb-3 px-1">
                 Your Processed Link
               </p>
-              <div className="p-4 bg-muted rounded-md border border-border break-all text-sm text-foreground font-mono">
+              <div className="p-5 neo-inset rounded-[1.25rem] break-all text-sm text-foreground font-mono leading-relaxed selection:bg-primary selection:text-white">
                 {processedUrl}
               </div>
             </div>
 
-            <div className="flex gap-2">
-              <Button
-                onClick={copyToClipboard}
-                className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground font-medium py-2 rounded-md transition-colors flex items-center justify-center gap-2"
-              >
-                {copied ? (
-                  <>
-                    <Check size={18} />
-                    Copied!
-                  </>
-                ) : (
-                  <>
-                    <Copy size={18} />
-                    Copy Link
-                  </>
-                )}
-              </Button>
-            </div>
+            <Button
+              variant="outline"
+              onClick={copyToClipboard}
+              className="w-full"
+            >
+              {copied ? (
+                <>
+                  <Check size={20} className="text-green-500" />
+                  <span className="text-green-500">Copied to Clipboard!</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={20} className="text-primary" />
+                  Copy Link
+                </>
+              )}
+            </Button>
 
             {success && (
-              <p className="text-sm text-green-600 font-medium">
-                ✓ Link saved and ready to share!
+              <p className="text-sm text-green-500 font-bold text-center mt-4">
+                ✓ Link magically generated and ready to share!
               </p>
             )}
           </div>
