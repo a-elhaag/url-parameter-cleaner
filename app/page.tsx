@@ -7,10 +7,10 @@ export default function Home() {
       <div className="w-full max-w-2xl">
         <div className="text-center mb-12 neo rounded-[2rem] p-8">
           <h1 className="text-4xl md:text-5xl font-extrabold text-primary mb-3 tracking-tight">
-            URL Magic
+            MSC - ECU
           </h1>
           <p className="text-muted-foreground font-medium text-lg">
-            Clean and prepare your Microsoft links
+            Generate links
           </p>
         </div>
 
